@@ -24,7 +24,7 @@ VidyutSahayak provides a simple digital platform where schools can report electr
 - **Issue Reporting:** Submit electrical problems with school details, descriptions, and urgency levels.
 - **Photo Uploads:** Attach images to help explain the reported issue.
 - **Issue Tracking:** Monitor requests through Open, In Progress, and Resolved statuses.
-- **Volunteer Support:** Facilitate volunteer coordination for reported issues.
+- **Volunteer Support:** Facilitate volunteer coordination for reported issues. 
 - **WhatsApp Sharing:** Share issue details quickly with potential helpers.
 - **Dashboard:** View reported issues and repair progress.
 - **Responsive Design:** Access the platform from desktops, tablets, and mobile devices.
