@@ -1,1212 +1,220 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VidyutSahayak | Rural School Power & Solar Maintenance Network</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VidyutSahayak Unified Portal</title>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+      :root {
+        --bg: #081a1f;
+        --panel: #102b33;
+        --panel-alt: #173d47;
+        --primary: #40d9b5;
+        --primary-2: #7ce8c7;
+        --text: #ebf9ff;
+        --muted: #9ec6ce;
+        --border: rgba(124, 232, 199, 0.25);
+      }
 
-        .photo-upload-area {
-            transition: background-color 0.2s ease;
-        }
+      * { box-sizing: border-box; }
 
-        .photo-upload-area:hover {
-            background-color: #fef3c7;
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #06151b 0%, #0c2430 100%);
+        color: var(--text);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(7, 24, 30, 0.92);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+      }
+
+      .topbar-inner {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 18px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .brand {
+        font-size: clamp(1.3rem, 2vw, 2rem);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .brand span {
+        color: var(--primary-2);
+      }
+
+      .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .nav a {
+        text-decoration: none;
+        color: var(--text);
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--border);
+        padding: 10px 14px;
+        border-radius: 999px;
+        transition: 0.2s ease;
+      }
+
+      .nav a:hover {
+        background: rgba(64, 217, 181, 0.15);
+        border-color: rgba(64, 217, 181, 0.5);
+      }
+
+      .container {
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 30px 24px 50px;
+      }
+
+      .hero {
+        background: rgba(18, 45, 52, 0.7);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 28px 30px;
+        box-shadow: 0 18px 40px rgba(0,0,0,0.2);
+      }
+
+      .hero h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+      }
+
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.05rem;
+        max-width: 1000px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 22px;
+        margin-top: 26px;
+      }
+
+      .card {
+        background: rgba(15, 39, 46, 0.96);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        overflow: hidden;
+        min-height: 520px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-header {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: rgba(255,255,255,0.02);
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(64, 217, 181, 0.12);
+        color: var(--primary-2);
+        font-weight: 700;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .open-link {
+        color: var(--primary-2);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      iframe {
+        width: 100%;
+        height: 450px;
+        border: 0;
+        background: white;
+      }
+
+      @media (max-width: 760px) {
+        .card {
+          min-height: 440px;
         }
+      }
     </style>
-</head>
-
-<body class="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
-
-    <!-- HEADER -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-
-            <div class="flex items-center space-x-3">
-                <div class="bg-amber-600 p-2 rounded-xl text-white shadow-md">
-                    <i data-lucide="zap" class="w-6 h-6"></i>
-                </div>
-
-                <div>
-                    <span class="text-xl font-bold tracking-tight">
-                        Vidyut<span class="text-amber-600">Sahayak</span>
-                    </span>
-                    <span class="hidden sm:inline-block ml-2 text-xs bg-amber-50 text-amber-700 font-medium px-2 py-0.5 rounded-full border border-amber-200">
-                        Social Impact MVP
-                    </span>
-                </div>
-            </div>
-
-            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="#tickets" class="hover:text-amber-600">Active Tickets</a>
-                <a href="#impact" class="hover:text-amber-600">Impact Metrics</a>
-                <a href="#volunteers" class="hover:text-amber-600">Tech Volunteers</a>
-            </nav>
-
-            <button onclick="openTicketModal()"
-                class="bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-sm transition flex items-center space-x-2">
-                <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                <span class="hidden sm:inline">Report Power Issue</span>
-                <span class="sm:hidden">Report Issue</span>
-            </button>
-
-        </div>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">Vidyut<span>Sahayak</span></div>
+        <nav class="nav">
+          <a href="/dashboard">Dashboard</a>
+          <a href="/tickets">Tickets</a>
+          <a href="/report">Report</a>
+          <a href="/feed">Citizen Feed</a>
+        </nav>
+      </div>
     </header>
 
-    <!-- HERO -->
-    <section class="bg-gradient-to-b from-slate-900 via-slate-800 to-amber-950 text-white py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <main class="container">
+      <section class="hero">
+        <h1>Unified power response portal</h1>
+        <p>
+          This landing page combines the separate VidyutSahayak operational views into one single website so teams can review the power dashboard, dispatch tickets, outage reporting, and citizen feed from one place.
+        </p>
+      </section>
 
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <section class="grid">
+        <article class="card">
+          <div class="card-header">
+            <span class="badge">Dashboard</span>
+            <a class="open-link" href="/dashboard" target="_blank">Open</a>
+          </div>
+          <iframe src="/dashboard" title="Dashboard"></iframe>
+        </article>
 
-        <div class="max-w-4xl mx-auto text-center relative z-10">
+        <article class="card">
+          <div class="card-header">
+            <span class="badge">Tickets</span>
+            <a class="open-link" href="/tickets" target="_blank">Open</a>
+          </div>
+          <iframe src="/tickets" title="Tickets"></iframe>
+        </article>
 
-            <span class="inline-flex items-center space-x-1.5 bg-amber-900/60 text-amber-200 text-xs font-semibold px-3 py-1 rounded-full border border-amber-700/50 mb-6">
-                <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                <span>Verified Rural School Infrastructure Network</span>
-            </span>
+        <article class="card">
+          <div class="card-header">
+            <span class="badge">Report</span>
+            <a class="open-link" href="/report" target="_blank">Open</a>
+          </div>
+          <iframe src="/report" title="Report"></iframe>
+        </article>
 
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-6 leading-tight">
-                Keep Rural Classrooms Powered.
-                <br>
-                <span class="text-amber-400">Never Let Solar Kits Sit Broken.</span>
-            </h1>
-
-            <p class="text-lg text-slate-300 mb-10 max-w-2xl mx-auto">
-                Connecting rural government schools with local electricians,
-                polytechnic students, and CSR volunteers for faster solar
-                and electrical repairs.
-            </p>
-
-            <!-- SEARCH AND FILTER -->
-            <div class="bg-white p-2 rounded-2xl shadow-2xl max-w-2xl mx-auto flex flex-col sm:flex-row gap-2">
-
-                <div class="flex-1 flex items-center px-3 py-2 bg-slate-50 rounded-xl border border-slate-200">
-                    <i data-lucide="search" class="w-5 h-5 text-slate-400 mr-2"></i>
-                    <input
-                        type="text"
-                        id="searchInput"
-                        oninput="filterTickets()"
-                        placeholder="Search school, district or issue..."
-                        class="w-full bg-transparent text-slate-900 placeholder-slate-400 text-sm focus:outline-none">
-                </div>
-
-                <div class="sm:w-44">
-                    <select id="statusFilter"
-                        onchange="filterTickets()"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-3 text-sm text-slate-700 focus:outline-none font-medium">
-
-                        <option value="">All Statuses</option>
-                        <option value="Open">Open Tickets</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Resolved">Resolved</option>
-                    </select>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN -->
-    <main id="tickets" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-1 w-full">
-
-        <!-- IMPACT METRICS -->
-        <div id="impact" class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                <div class="bg-amber-50 text-amber-600 p-3 rounded-xl">
-                    <i data-lucide="school" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-2xl font-bold" id="statSchools">42 Schools</p>
-                    <p class="text-xs text-slate-500 font-medium">Successfully Reconnected</p>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                <div class="bg-emerald-50 text-emerald-600 p-3 rounded-xl">
-                    <i data-lucide="users" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-2xl font-bold">128 Volunteers</p>
-                    <p class="text-xs text-slate-500 font-medium">Active Field Technicians</p>
-                </div>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center space-x-4">
-                <div class="bg-blue-50 text-blue-600 p-3 rounded-xl">
-                    <i data-lucide="clock" class="w-6 h-6"></i>
-                </div>
-                <div>
-                    <p class="text-2xl font-bold">&lt; 24 Hours</p>
-                    <p class="text-xs text-slate-500 font-medium">Average Response Time</p>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- TICKET HEADING -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 pb-4 border-b border-slate-200">
-            <div>
-                <h2 class="text-2xl font-bold tracking-tight">Active Maintenance Requests</h2>
-                <p class="text-sm text-slate-500">
-                    Schools awaiting technical dispatch or currently under repair.
-                </p>
-            </div>
-
-            <div class="mt-4 sm:mt-0 flex items-center space-x-2 text-xs font-medium text-slate-600">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse"></span>
-                <span>Community Dispatch Feed</span>
-            </div>
-        </div>
-
-        <!-- TICKET GRID -->
-        <div id="ticketGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
-        <!-- VOLUNTEERS -->
-        <div id="volunteers" class="mt-20 pt-12 border-t border-slate-200">
-
-            <div class="max-w-3xl mb-8">
-                <span class="text-xs font-semibold uppercase tracking-wider text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-                    Community Network
-                </span>
-
-                <h2 class="text-2xl font-bold mt-3">Verified Technical Responder Pool</h2>
-
-                <p class="text-sm text-slate-500 mt-1">
-                    Local polytechnic students, certified electricians, and engineering interns supporting rural education.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 font-bold flex items-center justify-center text-sm">AK</div>
-                        <div>
-                            <h4 class="font-bold text-sm">Arun Kumar</h4>
-                            <p class="text-xs text-slate-500">Certified Solar Technician</p>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-600">Completed 14 inverter repairs across Wayanad district schools.</p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs">
-                        <span class="text-emerald-600 font-semibold">● Active</span>
-                        <span class="text-slate-400">Wayanad Hub</span>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm">SN</div>
-                        <div>
-                            <h4 class="font-bold text-sm">Sneha Nambiar</h4>
-                            <p class="text-xs text-slate-500">Electrical Engineering Student</p>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-600">Specializes in LED lighting and battery bank maintenance.</p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs">
-                        <span class="text-emerald-600 font-semibold">● Active</span>
-                        <span class="text-slate-400">Kochi Hub</span>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                    <div class="flex items-center space-x-3 mb-3">
-                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-700 font-bold flex items-center justify-center text-sm">RJ</div>
-                        <div>
-                            <h4 class="font-bold text-sm">Rahul Joseph</h4>
-                            <p class="text-xs text-slate-500">Solar Grid Consultant</p>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-600">Volunteers weekend audits for rural government high schools.</p>
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex justify-between items-center text-xs">
-                        <span class="text-emerald-600 font-semibold">● Active</span>
-                        <span class="text-slate-400">Idukki Hub</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
+        <article class="card">
+          <div class="card-header">
+            <span class="badge">Citizen Feed</span>
+            <a class="open-link" href="/feed" target="_blank">Open</a>
+          </div>
+          <iframe src="/feed" title="Citizen Feed"></iframe>
+        </article>
+      </section>
     </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-slate-200 py-8 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-sm text-slate-500">
-            <p>&copy; 2026 VidyutSahayak MVP. Built for Social Impact Hackathon.</p>
-
-            <div class="flex flex-wrap justify-center gap-6 mt-4 sm:mt-0">
-                <a href="#safety" onclick="showSafetyGuidelines(event)" class="hover:text-amber-600">Safety Guidelines</a>
-                <a href="#volunteers" class="hover:text-amber-600">Volunteer FAQ</a>
-                <a href="mailto:support@vidyutsahayak.demo" class="hover:text-amber-600">Contact Support</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- REPORT ISSUE MODAL -->
-    <div id="ticketModal"
-        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4 overflow-y-auto">
-
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 my-auto">
-
-            <div class="flex justify-between items-center mb-6">
-                <div class="flex items-center space-x-3">
-                    <div class="bg-amber-50 text-amber-600 p-2 rounded-xl">
-                        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold">Report School Power Issue</h3>
-                        <p class="text-xs text-slate-500">Upload details and optional photo evidence.</p>
-                    </div>
-                </div>
-
-                <button type="button" onclick="closeTicketModal()" aria-label="Close modal"
-                    class="text-slate-400 hover:text-slate-600">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <form id="ticketForm" onsubmit="handleTicketSubmit(event)" class="space-y-4">
-
-                <!-- SCHOOL -->
-                <div>
-                    <label for="schoolName" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
-                        School Name & District
-                    </label>
-                    <input type="text" id="schoolName" required maxlength="180"
-                        placeholder="e.g., Govt. Higher Secondary School, Wayanad"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-600">
-                </div>
-
-                <!-- CATEGORY AND URGENCY -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                    <div>
-                        <label for="issueCategory" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
-                            Issue Category
-                        </label>
-                        <select id="issueCategory"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-600">
-                            <option value="Solar Inverter Failure">Solar Inverter Failure</option>
-                            <option value="Battery Bank Dead">Battery Bank Dead</option>
-                            <option value="Wiring / Fuse Blow">Wiring / Fuse Blow</option>
-                            <option value="Panel Physical Damage">Panel Physical Damage</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="urgencyLevel" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
-                            Urgency Level
-                        </label>
-                        <select id="urgencyLevel"
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-600">
-                            <option value="High (Exam Season)">High (Exam Season)</option>
-                            <option value="Medium (Computer Lab Down)">Medium (Lab Down)</option>
-                            <option value="Standard">Standard</option>
-                        </select>
-                    </div>
-
-                </div>
-
-                <!-- DESCRIPTION -->
-                <div>
-                    <label for="issueDesc" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
-                        Problem Description
-                    </label>
-                    <textarea id="issueDesc" rows="3" required maxlength="1200"
-                        placeholder="Describe the problem or error code..."
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-600"></textarea>
-                </div>
-
-                <!-- PHOTO UPLOAD: NEW FEATURE -->
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">
-                        Photo Evidence (Optional)
-                    </label>
-
-                    <label for="issuePhoto"
-                        class="photo-upload-area flex flex-col items-center justify-center w-full min-h-32 p-4 bg-amber-50 border-2 border-dashed border-amber-300 rounded-xl cursor-pointer">
-
-                        <i data-lucide="camera" class="w-8 h-8 text-amber-600 mb-2"></i>
-
-                        <span class="text-sm font-semibold text-slate-700">
-                            Upload damage photo
-                        </span>
-
-                        <span class="text-xs text-slate-500 mt-1 text-center">
-                            Inverter screen, blown fuse or damaged panel
-                        </span>
-
-                        <span class="text-xs text-slate-400 mt-1">
-                            Maximum 10 MB before compression
-                        </span>
-
-                        <input type="file" id="issuePhoto" accept="image/*" class="hidden">
-                    </label>
-
-                    <!-- IMAGE PREVIEW -->
-                    <div id="photoPreviewContainer" class="hidden mt-3">
-                        <img id="photoPreview" alt="Selected damage photo preview"
-                            class="w-full max-h-56 object-contain rounded-xl border border-slate-200 bg-slate-100">
-
-                        <div class="flex justify-between items-center mt-2">
-                            <p id="photoFileName" class="text-xs text-slate-500 truncate mr-3"></p>
-
-                            <button type="button" onclick="removePhoto()"
-                                class="text-xs font-semibold text-red-600 hover:text-red-700 shrink-0">
-                                <i data-lucide="trash-2" class="w-3 h-3 inline"></i>
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CONTACT -->
-                <div>
-                    <label for="contactPerson" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">
-                        Headmaster / Contact Person & Phone
-                    </label>
-                    <input type="text" id="contactPerson" required maxlength="180"
-                        placeholder="e.g., Headmaster, +91 XXXXX XXXXX"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-600">
-                </div>
-
-                <!-- FORM ACTIONS -->
-                <div class="pt-4 flex items-center justify-end space-x-3">
-                    <button type="button" onclick="closeTicketModal()"
-                        class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition">
-                        Cancel
-                    </button>
-
-                    <button type="submit" id="submitTicketButton"
-                        class="bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-sm transition flex items-center space-x-2">
-                        <i data-lucide="send" class="w-4 h-4"></i>
-                        <span>Submit Ticket</span>
-                    </button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-
-    <!-- TOAST NOTIFICATION -->
-    <div id="toast"
-        role="status"
-        aria-live="polite"
-        class="fixed bottom-6 right-6 left-6 sm:left-auto sm:max-w-md bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-[60] flex items-center space-x-3">
-
-        <div class="bg-amber-500 text-white p-1 rounded-full shrink-0">
-            <i data-lucide="check" class="w-4 h-4"></i>
-        </div>
-
-        <div>
-            <p class="text-sm font-bold" id="toastTitle">Success!</p>
-            <p class="text-xs text-slate-300" id="toastMsg">Operation completed.</p>
-        </div>
-    </div>
-
-    <!-- APPLICATION JAVASCRIPT -->
-    <script>
-        // ==========================================
-        // 1. SAMPLE TICKETS
-        // ==========================================
-
-        const defaultTickets = [
-            {
-                id: 1,
-                school: "Govt. Higher Secondary School, Wayanad",
-                category: "Solar Inverter Failure",
-                urgency: "High (Exam Season)",
-                desc: "Main 5kVA solar inverter stopped charging after a recent monsoon power surge. Computer lab is currently running on generator backup.",
-                contact: "Mr. Thomas Kurian (+91 94471 23456)",
-                status: "Open",
-                date: "2026-10-12",
-                photo: null
-            },
-            {
-                id: 2,
-                school: "Govt. Tribal UP School, Attappadi",
-                category: "Battery Bank Dead",
-                urgency: "Medium (Computer Lab Down)",
-                desc: "Tubular battery cells have deteriorated following prolonged disuse during vacation. Smart boards cannot power up.",
-                contact: "Mrs. Lakshmi Devi (+91 98470 98765)",
-                status: "In Progress",
-                date: "2026-10-10",
-                photo: null
-            },
-            {
-                id: 3,
-                school: "Govt. Model LP School, Idukki Hills",
-                category: "Wiring / Fuse Blow",
-                urgency: "Standard",
-                desc: "Main distribution box fuse blown near the science laboratory following heavy thunderstorms.",
-                contact: "Mr. Varghese Mathew (+91 94460 11223)",
-                status: "Resolved",
-                date: "2026-10-08",
-                photo: null
-            }
-        ];
-
-        // ==========================================
-        // 2. LOAD AND SAVE TICKETS
-        // ==========================================
-
-        function loadTickets() {
-            try {
-                const saved = localStorage.getItem("vidyutSahayakTickets");
-
-                if (saved) {
-                    const parsed = JSON.parse(saved);
-
-                    if (Array.isArray(parsed)) {
-                        return parsed.map(ticket => ({
-                            ...ticket,
-                            photo: ticket.photo || null
-                        }));
-                    }
-                }
-            } catch (error) {
-                console.error("Could not load saved tickets:", error);
-            }
-
-            return defaultTickets.map(ticket => ({ ...ticket }));
-        }
-
-        let tickets = loadTickets();
-
-        function saveTickets() {
-            try {
-                localStorage.setItem(
-                    "vidyutSahayakTickets",
-                    JSON.stringify(tickets)
-                );
-
-                return true;
-            } catch (error) {
-                console.error("Could not save tickets:", error);
-
-                showToast(
-                    "Storage Limit Reached",
-                    "Changes remain temporarily available. Remove old tickets or photos to free space."
-                );
-
-                return false;
-            }
-        }
-
-        // ==========================================
-        // 3. PHOTO UPLOAD AND COMPRESSION
-        // ==========================================
-
-        let selectedImageData = null;
-        let photoProcessing = false;
-
-        function processPhoto(file) {
-            return new Promise((resolve, reject) => {
-                if (!file || !file.type.startsWith("image/")) {
-                    reject(new Error("Please select a valid image file."));
-                    return;
-                }
-
-                if (file.size > 10 * 1024 * 1024) {
-                    reject(new Error("Please select an image smaller than 10 MB."));
-                    return;
-                }
-
-                const reader = new FileReader();
-
-                reader.onload = function (event) {
-                    const img = new Image();
-
-                    img.onload = function () {
-                        try {
-                            const maxDimension = 1000;
-
-                            const scale = Math.min(
-                                1,
-                                maxDimension / Math.max(img.width, img.height)
-                            );
-
-                            const canvas = document.createElement("canvas");
-
-                            canvas.width = Math.max(1, Math.round(img.width * scale));
-                            canvas.height = Math.max(1, Math.round(img.height * scale));
-
-                            const ctx = canvas.getContext("2d");
-
-                            if (!ctx) {
-                                reject(new Error("Image processing is unavailable."));
-                                return;
-                            }
-
-                            ctx.fillStyle = "#ffffff";
-                            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                            ctx.drawImage(
-                                img,
-                                0,
-                                0,
-                                canvas.width,
-                                canvas.height
-                            );
-
-                            const compressedImage = canvas.toDataURL(
-                                "image/jpeg",
-                                0.72
-                            );
-
-                            resolve(compressedImage);
-                        } catch (error) {
-                            reject(new Error("Could not process this image."));
-                        }
-                    };
-
-                    img.onerror = function () {
-                        reject(new Error("Could not read this image. Try a JPG or PNG."));
-                    };
-
-                    img.src = event.target.result;
-                };
-
-                reader.onerror = function () {
-                    reject(new Error("Failed to load the selected image."));
-                };
-
-                reader.readAsDataURL(file);
-            });
-        }
-
-        // Handle photo selection
-        document.getElementById("issuePhoto").addEventListener(
-            "change",
-            async function () {
-                const file = this.files[0];
-
-                if (!file) return;
-
-                const input = this;
-
-                photoProcessing = true;
-                updateSubmitButton();
-
-                try {
-                    const compressedImage = await processPhoto(file);
-
-                    selectedImageData = compressedImage;
-
-                    document.getElementById("photoPreview").src =
-                        compressedImage;
-
-                    document.getElementById("photoFileName").textContent =
-                        file.name;
-
-                    document.getElementById("photoPreviewContainer")
-                        .classList.remove("hidden");
-
-                    showToast(
-                        "Photo Ready",
-                        "Your damage evidence is ready to attach."
-                    );
-
-                    lucide.createIcons();
-                } catch (error) {
-                    selectedImageData = null;
-                    input.value = "";
-
-                    document.getElementById("photoPreview").src = "";
-
-                    document.getElementById("photoPreviewContainer")
-                        .classList.add("hidden");
-
-                    alert(error.message);
-                } finally {
-                    photoProcessing = false;
-                    updateSubmitButton();
-                }
-            }
-        );
-
-        function removePhoto() {
-            selectedImageData = null;
-
-            document.getElementById("issuePhoto").value = "";
-            document.getElementById("photoPreview").src = "";
-            document.getElementById("photoFileName").textContent = "";
-
-            document.getElementById("photoPreviewContainer")
-                .classList.add("hidden");
-
-            photoProcessing = false;
-            updateSubmitButton();
-        }
-
-        function updateSubmitButton() {
-            const button = document.getElementById("submitTicketButton");
-
-            button.disabled = photoProcessing;
-
-            button.classList.toggle("opacity-50", photoProcessing);
-            button.classList.toggle("cursor-not-allowed", photoProcessing);
-
-            button.querySelector("span").textContent =
-                photoProcessing ? "Processing Photo..." : "Submit Ticket";
-        }
-
-        // ==========================================
-        // 4. SAFE HTML DISPLAY HELPERS
-        // ==========================================
-
-        function escapeHTML(value) {
-            return String(value ?? "").replace(/[&<>"']/g, character => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            })[character]);
-        }
-
-        // ==========================================
-        // 5. RENDER TICKET CARDS
-        // ==========================================
-
-        function renderTickets(items = tickets) {
-            const grid = document.getElementById("ticketGrid");
-
-            grid.innerHTML = "";
-
-            if (items.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200">
-                        <i data-lucide="search-x" class="w-12 h-12 text-slate-300 mx-auto mb-3"></i>
-                        <p class="text-slate-600 font-semibold">No maintenance tickets found.</p>
-                        <p class="text-xs text-slate-400 mt-1">
-                            Try changing your search or status filter.
-                        </p>
-                    </div>
-                `;
-
-                lucide.createIcons();
-                return;
-            }
-
-            items.forEach(ticket => {
-                let statusColor = "bg-amber-50 text-amber-700 border-amber-200";
-
-                if (ticket.status === "In Progress") {
-                    statusColor = "bg-blue-50 text-blue-700 border-blue-200";
-                }
-
-                if (ticket.status === "Resolved") {
-                    statusColor = "bg-emerald-50 text-emerald-700 border-emerald-200";
-                }
-
-                const urgencyColor = ticket.urgency.startsWith("High")
-                    ? "text-red-600"
-                    : ticket.urgency.startsWith("Medium")
-                        ? "text-amber-700"
-                        : "text-slate-700";
-
-                const card = document.createElement("article");
-
-                card.className =
-                    "bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition flex flex-col";
-
-                const photoSection = ticket.photo
-                    ? `
-                        <div class="mb-4">
-                            <img
-                                src="${ticket.photo}"
-                                alt="Damage evidence for ${escapeHTML(ticket.school)}"
-                                loading="lazy"
-                                class="w-full h-48 object-cover rounded-xl border border-slate-200 cursor-pointer"
-                                onclick="viewPhoto(${ticket.id})"
-                            >
-
-                            <p class="text-xs text-emerald-700 mt-2 flex items-center gap-1 font-medium">
-                                <i data-lucide="image-check" class="w-3.5 h-3.5"></i>
-                                Photo evidence attached
-                            </p>
-
-                            <button
-                                type="button"
-                                onclick="viewPhoto(${ticket.id})"
-                                class="text-xs text-amber-700 font-semibold mt-1 hover:underline">
-                                View full photo
-                            </button>
-                        </div>
-                    `
-                    : `
-                        <div class="mb-4 p-4 bg-slate-50 border border-dashed border-slate-200 rounded-xl text-center">
-                            <i data-lucide="image-off" class="w-6 h-6 mx-auto text-slate-300 mb-1"></i>
-                            <p class="text-xs text-slate-400">No photo evidence attached</p>
-                        </div>
-                    `;
-
-                card.innerHTML = `
-                    <div class="flex-1">
-
-                        <div class="flex flex-wrap justify-between items-start gap-2 mb-3">
-                            <span class="text-xs font-semibold ${statusColor} px-3 py-1 rounded-full border">
-                                ${escapeHTML(ticket.status)}
-                            </span>
-
-                            <span class="text-xs font-medium text-slate-500 bg-slate-100 px-2.5 py-1 rounded-full">
-                                ${escapeHTML(ticket.category)}
-                            </span>
-                        </div>
-
-                        <div class="text-xs text-slate-400 font-semibold mb-2">
-                            TICKET VS-${ticket.id}
-                        </div>
-
-                        <h3 class="text-lg font-bold text-slate-900 mb-3">
-                            ${escapeHTML(ticket.school)}
-                        </h3>
-
-                        <p class="text-xs text-slate-600 mb-4 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100 whitespace-pre-wrap break-words">${escapeHTML(ticket.desc)}</p>
-
-                        ${photoSection}
-
-                        <div class="space-y-3 text-xs text-slate-500 border-t border-slate-100 pt-4">
-
-                            <div class="flex items-start gap-2">
-                                <i data-lucide="alert-octagon" class="w-4 h-4 text-amber-600 shrink-0"></i>
-                                <span>
-                                    Urgency:
-                                    <strong class="${urgencyColor}">
-                                        ${escapeHTML(ticket.urgency)}
-                                    </strong>
-                                </span>
-                            </div>
-
-                            <div class="flex items-start gap-2">
-                                <i data-lucide="user-round" class="w-4 h-4 text-amber-600 shrink-0"></i>
-                                <span class="break-words">
-                                    Contact:
-                                    <strong class="text-slate-700">
-                                        ${escapeHTML(ticket.contact)}
-                                    </strong>
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- WHATSAPP AND DISPATCH ACTIONS -->
-                    <div class="mt-6 pt-4 border-t border-slate-100">
-
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-xs text-slate-400">
-                                Logged: ${escapeHTML(ticket.date)}
-                            </span>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-2">
-
-                            <button
-                                type="button"
-                                onclick="shareViaWhatsApp(${ticket.id})"
-                                class="bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 text-xs font-semibold px-3 py-2.5 rounded-xl transition border border-emerald-200 flex items-center justify-center gap-1.5">
-
-                                <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                WhatsApp
-                            </button>
-
-                            <button
-                                type="button"
-                                onclick="dispatchVolunteer(${ticket.id})"
-                                ${ticket.status !== "Open" ? "disabled" : ""}
-                                class="${ticket.status === "Open"
-                                    ? "bg-amber-50 hover:bg-amber-600 hover:text-white text-amber-700 border-amber-200"
-                                    : "bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed"
-                                } text-xs font-semibold px-3 py-2.5 rounded-xl transition border flex items-center justify-center gap-1.5">
-
-                                <i data-lucide="${ticket.status === "Open" ? "wrench" : "check-circle"}" class="w-4 h-4"></i>
-
-                                ${ticket.status === "Open"
-                                    ? "Dispatch"
-                                    : ticket.status === "Resolved"
-                                        ? "Resolved"
-                                        : "Assigned"
-                                }
-                            </button>
-
-                        </div>
-
-                        ${ticket.status === "In Progress" ? `
-                            <button
-                                type="button"
-                                onclick="resolveTicket(${ticket.id})"
-                                class="w-full mt-2 bg-emerald-50 hover:bg-emerald-600 hover:text-white text-emerald-700 text-xs font-semibold px-3 py-2.5 rounded-xl border border-emerald-200 transition flex items-center justify-center gap-2">
-                                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                                Mark as Resolved
-                            </button>
-                        ` : ""}
-
-                    </div>
-                `;
-
-                grid.appendChild(card);
-            });
-
-            lucide.createIcons();
-            updateImpactStats();
-        }
-
-        // ==========================================
-        // 6. PHOTO LIGHTBOX
-        // ==========================================
-
-        function viewPhoto(id) {
-            const ticket = tickets.find(item => item.id === id);
-
-            if (!ticket || !ticket.photo) return;
-
-            const modal = document.getElementById("photoViewerModal");
-
-            document.getElementById("fullPhoto").src = ticket.photo;
-
-            document.getElementById("fullPhotoTitle").textContent =
-                ticket.school + " | VS-" + ticket.id;
-
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-        }
-
-        function closePhotoViewer() {
-            const modal = document.getElementById("photoViewerModal");
-
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-
-            document.getElementById("fullPhoto").src = "";
-        }
-
-        // ==========================================
-        // 7. SEARCH AND FILTER
-        // ==========================================
-
-        function filterTickets() {
-            const query = document.getElementById("searchInput")
-                .value.trim().toLowerCase();
-
-            const status = document.getElementById("statusFilter").value;
-
-            const filtered = tickets.filter(ticket => {
-                const searchableText = [
-                    ticket.school,
-                    ticket.desc,
-                    ticket.category,
-                    ticket.urgency,
-                    ticket.contact,
-                    ticket.status,
-                    ticket.id
-                ].join(" ").toLowerCase();
-
-                const matchesQuery = searchableText.includes(query);
-
-                const matchesStatus =
-                    status === "" || ticket.status === status;
-
-                return matchesQuery && matchesStatus;
-            });
-
-            renderTickets(filtered);
-        }
-
-        // ==========================================
-        // 8. MODAL CONTROLS
-        // ==========================================
-
-        function openTicketModal() {
-            const modal = document.getElementById("ticketModal");
-
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-
-            lucide.createIcons();
-        }
-
-        function closeTicketModal() {
-            const modal = document.getElementById("ticketModal");
-
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-
-            document.getElementById("ticketForm").reset();
-
-            removePhoto();
-        }
-
-        // ==========================================
-        // 9. SUBMIT A NEW TICKET
-        // ==========================================
-
-        function handleTicketSubmit(event) {
-            event.preventDefault();
-
-            if (photoProcessing) {
-                showToast(
-                    "Please Wait",
-                    "Your photo is still being processed."
-                );
-                return;
-            }
-
-            const school = document.getElementById("schoolName").value.trim();
-            const category = document.getElementById("issueCategory").value;
-            const urgency = document.getElementById("urgencyLevel").value;
-            const desc = document.getElementById("issueDesc").value.trim();
-            const contact = document.getElementById("contactPerson").value.trim();
-
-            if (!school || !desc || !contact) {
-                showToast(
-                    "Missing Details",
-                    "Please complete all required fields."
-                );
-                return;
-            }
-
-            const newTicket = {
-                id: Date.now(),
-                school,
-                category,
-                urgency,
-                desc,
-                contact,
-                photo: selectedImageData,
-                status: "Open",
-                date: new Date().toLocaleDateString("en-CA")
-            };
-
-            tickets.unshift(newTicket);
-
-            saveTickets();
-
-            // Reset the form and photo selection
-            closeTicketModal();
-
-            // Clear filters so the newly submitted ticket is visible
-            document.getElementById("searchInput").value = "";
-            document.getElementById("statusFilter").value = "";
-
-            renderTickets();
-
-            showToast(
-                "Ticket Created Successfully!",
-                selectedImageData
-                    ? "Your ticket and photo evidence have been added."
-                    : "Your maintenance request is now visible."
-            );
-
-            // Scroll to the ticket list
-            document.getElementById("tickets").scrollIntoView({
-                behavior: "smooth"
-            });
-        }
-
-        // ==========================================
-        // 10. VOLUNTEER DISPATCH
-        // ==========================================
-
-        function dispatchVolunteer(id) {
-            const ticket = tickets.find(item => item.id === id);
-
-            if (!ticket || ticket.status !== "Open") return;
-
-            ticket.status = "In Progress";
-
-            saveTickets();
-            filterTickets();
-
-            showToast(
-                "Technician Assigned",
-                "VS-" + ticket.id + " is now marked In Progress."
-            );
-        }
-
-        // ==========================================
-        // 11. MARK A TICKET AS RESOLVED
-        // ==========================================
-
-        function resolveTicket(id) {
-            const ticket = tickets.find(item => item.id === id);
-
-            if (!ticket || ticket.status !== "In Progress") return;
-
-            ticket.status = "Resolved";
-
-            saveTickets();
-            filterTickets();
-
-            showToast(
-                "Issue Resolved",
-                "VS-" + ticket.id + " has been marked as resolved."
-            );
-        }
-
-        // ==========================================
-        // 12. WHATSAPP SHARE
-        // ==========================================
-
-        function shareViaWhatsApp(id) {
-            const ticket = tickets.find(item => item.id === id);
-
-            if (!ticket) {
-                showToast(
-                    "Ticket Not Found",
-                    "Please refresh the page and try again."
-                );
-                return;
-            }
-
-            const message = [
-                "⚡ VIDYUTSAHAYAK | POWER ISSUE",
-                "",
-                "🎫 Ticket ID: VS-" + ticket.id,
-                "🏫 School: " + ticket.school,
-                "🔧 Issue: " + ticket.category,
-                "🚨 Urgency: " + ticket.urgency,
-                "📊 Status: " + ticket.status,
-                "",
-                "📝 Description: " + ticket.desc,
-                "👤 Contact: " + ticket.contact,
-                "📅 Reported: " + ticket.date,
-                "",
-                "Please coordinate with the school and arrange a qualified technician.",
-                "",
-                "Safety first: electrical repairs must be handled by qualified personnel."
-            ].join("\n");
-
-            const whatsappURL =
-                "https://api.whatsapp.com/send?text=" +
-                encodeURIComponent(message);
-
-            window.open(
-                whatsappURL,
-                "_blank",
-                "noopener,noreferrer"
-            );
-        }
-
-        // ==========================================
-        // 13. IMPACT METRICS
-        // ==========================================
-
-        function updateImpactStats() {
-            const resolvedCount = tickets.filter(
-                ticket => ticket.status === "Resolved"
-            ).length;
-
-            document.getElementById("statSchools").textContent =
-                (42 + resolvedCount) + " Schools";
-        }
-
-        // ==========================================
-        // 14. TOAST NOTIFICATIONS
-        // ==========================================
-
-        let toastTimeout;
-
-        function showToast(title, message) {
-            const toast = document.getElementById("toast");
-
-            document.getElementById("toastTitle").textContent = title;
-            document.getElementById("toastMsg").textContent = message;
-
-            toast.classList.remove(
-                "translate-y-20",
-                "opacity-0",
-                "pointer-events-none"
-            );
-
-            clearTimeout(toastTimeout);
-
-            toastTimeout = setTimeout(() => {
-                toast.classList.add(
-                    "translate-y-20",
-                    "opacity-0",
-                    "pointer-events-none"
-                );
-            }, 4000);
-        }
-
-        // ==========================================
-        // 15. SAFETY GUIDELINES
-        // ==========================================
-
-        function showSafetyGuidelines(event) {
-            event.preventDefault();
-
-            alert(
-                "VIDYUTSAHAYAK SAFETY GUIDELINES\n\n" +
-                "1. Do not touch exposed or damaged electrical wiring.\n" +
-                "2. Keep students away from damaged equipment.\n" +
-                "3. Do not open solar inverters or battery enclosures yourself.\n" +
-                "4. Contact a qualified electrician or authorized technician.\n" +
-                "5. Share photographs only from a safe distance.\n" +
-                "6. Never attempt repairs on live electrical equipment."
-            );
-        }
-
-        // ==========================================
-        // 16. KEYBOARD AND MODAL ACCESSIBILITY
-        // ==========================================
-
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                closeTicketModal();
-                closePhotoViewer();
-            }
-        });
-
-        // ==========================================
-        // 17. INITIAL RENDER
-        // ==========================================
-
-        renderTickets();
-        lucide.createIcons();
-
-    </script>
-
-    <!-- FULL PHOTO VIEWER MODAL -->
-    <div id="photoViewerModal"
-        class="fixed inset-0 bg-slate-950/90 backdrop-blur-sm z-[70] hidden items-center justify-center p-4"
-        onclick="if(event.target === this) closePhotoViewer()">
-
-        <div class="w-full max-w-4xl bg-white rounded-2xl p-4 sm:p-6">
-
-            <div class="flex items-start justify-between gap-4 mb-4">
-                <div>
-                    <h3 class="text-lg font-bold">Photo Evidence</h3>
-                    <p id="fullPhotoTitle" class="text-xs text-slate-500 mt-1"></p>
-                </div>
-
-                <button type="button" onclick="closePhotoViewer()"
-                    class="p-2 rounded-xl hover:bg-slate-100 text-slate-500"
-                    aria-label="Close photo viewer">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-
-            <img id="fullPhoto" alt="Full-size damage evidence"
-                class="w-full max-h-[70vh] object-contain bg-slate-100 rounded-xl">
-
-            <p class="text-xs text-slate-500 mt-3">
-                Photo evidence is provided for reporting purposes. Repairs must be performed by qualified personnel.
-            </p>
-
-        </div>
-    </div>
-
-</body>
+  </body>
 </html>
